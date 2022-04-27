@@ -1,0 +1,15 @@
+.footer {
+  text-align: right;
+  font-style: italic;
+  padding-right: 30px;
+  margin-top: 80px;
+  background-color: orange;
+}
+
+.header {
+  padding-bottom: 20px;
+}
+
+.navbar > .container-fluid {
+  justify-content: center;
+}

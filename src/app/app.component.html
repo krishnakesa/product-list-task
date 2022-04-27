@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1">
+            <h1 class="text-center header">Product List Page</h1>
+          </span>
+        </div>
+      </nav>
+      <app-product-list [products]="displayItems" [currentPage]="currentPage" [pageSize]="pageSize" [activeProduct]="currentProduct"
+        (rowItemClicked)="rowItemClicked($event)">
+      </app-product-list>
+    </div>
+    <div class="col">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <app-pagination [currentPage]="currentPage" [pageSize]="pageSize" [pageNumbers]="pageNumbers"
+        (onNextClicked)="getNext()" (onPreviousClicked)="getPrevious()" (onPageClicked)="getItems($event, true)">
+      </app-pagination>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <nav class="navbar footer">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Krishna Kireeti Kesa</span>
+    </div>
+  </nav>
+</div>

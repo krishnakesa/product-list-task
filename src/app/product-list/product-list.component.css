@@ -1,0 +1,10 @@
+.active,
+.active:hover {
+  background-color: black;
+  color: white;
+}
+
+.table-hover > tbody > tr.active:hover > * {
+  background-color: black;
+  color: white;
+}
