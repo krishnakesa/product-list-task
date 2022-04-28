@@ -5,7 +5,7 @@ import { ProductItemModel } from '../models/product-item.model';
 
 @Injectable()
 export class ProductService {
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   public allProducts: ProductItemModel[] = [];
 
@@ -17,6 +17,8 @@ export class ProductService {
   }
 
   getProductDetails(blendName: string): ProductItemModel {
-    return this.allProducts.find(({ blend_name }) => blend_name === blendName) || {};
+    return (
+      this.allProducts.find(({ blend_name }) => blend_name === blendName) || {}
+    );
   }
 }

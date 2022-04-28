@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ProductItemModel } from './models/product-item.model';
 import { ProductService } from './services/product.service';
-
+import { loadCoffeeList } from './store/actions/coffee.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,6 @@ import { ProductService } from './services/product.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
   private products: ProductItemModel[] = [];
   pageSize: number = 10;
   totalItems: number = 50;
@@ -18,18 +18,23 @@ export class AppComponent {
   displayItems: ProductItemModel[] = [];
   pageNumbers: number[] = [1, 2, 3, 4, 5];
   currentProduct: ProductItemModel = new ProductItemModel({});
-  constructor(private _productService: ProductService, private _router: Router) { }
 
+  constructor(
+    private _productService: ProductService,
+    private _router: Router,
+    private store: Store
+  ) {}
 
   ngOnInit() {
     //Subscribed to the getProducts Observable
-    this._productService
-      .getProducts(this.totalItems)
-      .subscribe((products: ProductItemModel[]) => {
-        this.products = products;
-        this._productService.allProducts = products;
-        this.getItems(1);
-      });
+    // this._productService
+    //   .getProducts(this.totalItems)
+    //   .subscribe((products: ProductItemModel[]) => {
+    //     this.products = products;
+    //     this._productService.allProducts = products;
+    //     this.getItems(1);
+    //   });
+    this.store.dispatch(loadCoffeeList());
   }
 
   getNext(): void {
@@ -58,9 +63,10 @@ export class AppComponent {
     this.currentProduct = {};
     if (showDetails) {
       this.currentProduct = this.displayItems[0];
-      this._router.navigateByUrl(`/details?blendName=${this.currentProduct.blend_name}`);
+      this._router.navigateByUrl(
+        `/details?blendName=${this.currentProduct.blend_name}`
+      );
     }
-
   }
 
   rowItemClicked(product: ProductItemModel): void {
