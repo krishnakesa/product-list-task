@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { exhaustMap, map } from 'rxjs';
+import { map, mergeMap } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { loadCoffeeList, loadCoffeeSuccess } from '../actions/coffee.actions';
+import { CoffeeList, CoffeeListClass } from '../models/coffee.model';
 
 @Injectable()
 export class CoffeeEffects {
@@ -15,10 +15,13 @@ export class CoffeeEffects {
   getCoffeeList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadCoffeeList),
-      exhaustMap((action) => {
+      mergeMap((action) => {
         return this.productService.getProducts(50).pipe(
           map((data) => {
-            return loadCoffeeSuccess();
+            let coffeeList = data.map((coffee) => {
+              return new CoffeeListClass(coffee);
+            });
+            return loadCoffeeSuccess({ coffeeList: coffeeList });
           })
         );
       })

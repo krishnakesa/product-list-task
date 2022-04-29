@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { ProductItemModel } from './models/product-item.model';
 import { ProductService } from './services/product.service';
 import { loadCoffeeList } from './store/actions/coffee.actions';
+import { CoffeeList } from './store/models/coffee.model';
+import { getCoffeList } from './store/selectors/coffee.selector';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +14,12 @@ import { loadCoffeeList } from './store/actions/coffee.actions';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  private products: ProductItemModel[] = [];
+  products$: Observable<CoffeeList[]>;
+  products: CoffeeList[] = [];
   pageSize: number = 10;
   totalItems: number = 50;
   currentPage: number = 1;
-  displayItems: ProductItemModel[] = [];
+  displayItems: CoffeeList[] = [];
   pageNumbers: number[] = [1, 2, 3, 4, 5];
   currentProduct: ProductItemModel = new ProductItemModel({});
 
@@ -23,7 +27,9 @@ export class AppComponent {
     private _productService: ProductService,
     private _router: Router,
     private store: Store
-  ) {}
+  ) {
+    this.products$ = this.store.select(getCoffeList);
+  }
 
   ngOnInit() {
     //Subscribed to the getProducts Observable
@@ -35,6 +41,9 @@ export class AppComponent {
     //     this.getItems(1);
     //   });
     this.store.dispatch(loadCoffeeList());
+    this.products$.subscribe((data) => {
+      this.products = data;
+    });
   }
 
   getNext(): void {
