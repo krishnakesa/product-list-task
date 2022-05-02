@@ -1,0 +1,32 @@
+<div class="container px-4">
+  <div class="row gx-5">
+    <div class="col">
+      <nav aria-label="...">
+        <ul class="pagination justify-content-end">
+          <li
+            class="page-item"
+            [class.disabled]="currentPage === 1"
+            (click)="getPrevious()"
+          >
+            <span class="page-link">Previous</span>
+          </li>
+          <li
+            class="page-item"
+            [class.active]="currentPage === page"
+            *ngFor="let page of pageNumbers"
+            (click)="getItems(page)"
+          >
+            <a class="page-link">{{ page }}</a>
+          </li>
+          <li
+            class="page-item"
+            [class.disabled]="currentPage === 5"
+            (click)="getNext()"
+          >
+            <a class="page-link">Next</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

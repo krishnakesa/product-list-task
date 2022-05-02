@@ -1,38 +1,43 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppComponent } from './app.component';
-import { ProductService } from './services/product.service';
+import { ProductService, PRODUCT_LIST_API_HOST } from './services/product.service';
 import { FormsModule } from '@angular/forms';
-import { ProductListComponent } from './product-list/product-list.component';
-import { PaginationComponent } from './pagination/pagination.component';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { COFFEE_LIST_NAME } from './store/selectors/coffee.selector';
-import { CoffeeReducer } from './store/reducers/coffee.reducer';
-import { CoffeeEffects } from './store/effects/coffee.effects';
+import { environment } from 'src/environments/environment';
+import { ProductEffects } from './state/products.effects';
+import { productReducer } from './state/products.reducer';
 
 @NgModule({
-  declarations: [AppComponent, ProductListComponent, PaginationComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      {
-        path: 'details',
-        loadChildren: () =>
-          import('./item-detail/item-detail.module').then(
-            (mod) => mod.ItemDetailModule
-          ),
-      },
-    ]),
-    EffectsModule.forRoot([CoffeeEffects]),
-    StoreModule.forRoot({ COFFEE_LIST_NAME: CoffeeReducer }),
-  ],
-  providers: [ProductService],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        EffectsModule.forRoot([ProductEffects]),
+        StoreModule.forRoot({ products: productReducer }),
+        RouterModule.forRoot([
+            {
+                path: 'list',
+                loadChildren: () => import('./product-list-home/product-list-home.module').then(mod => mod.ProductListHomeModule)
+            },
+            {
+                path: 'details',
+                loadChildren: () => import('./item-detail/item-detail.module').then(mod => mod.ItemDetailModule)
+            },
+            {
+                path: '', redirectTo: 'list', pathMatch: 'full'
+            },
+
+        ])],
+    providers: [
+        ProductService,
+        { provide: PRODUCT_LIST_API_HOST, useValue: environment.productListAPIHostName }
+    ],
+    bootstrap: [AppComponent]
+
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  productListAPIHostName: 'https://random-data-api.com/api/coffee/random_coffee'
 };

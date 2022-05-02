@@ -1,31 +1,34 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ProductItemModel } from '../models/product-item.model';
+import { Store } from '@ngrx/store';
+import { Subscription, Observable } from 'rxjs';
+import { Product } from '../models/product.model';
 import { ProductService } from '../services/product.service';
+import { getSelectedProduct } from '../state/products.reducer';
+import * as ProductActions from '../state/products.actions';
 
 @Component({
   selector: 'app-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
 })
-export class ItemDetailComponent implements OnDestroy {
-  @Input() product: ProductItemModel = new ProductItemModel({});
+export class ItemDetailComponent {
 
-  private _sub: Subscription = new Subscription();
 
-  constructor(private activatedRoute: ActivatedRoute, private _productService: ProductService) { }
+  product$: Observable<Product> = new Observable()
+
+
+  constructor(private _store: Store) { }
 
   ngOnInit() {
-    this._sub = this.activatedRoute.queryParams.subscribe(params => {
-      const blendName = params['blendName'];
-      this.product = this._productService.getProductDetails(blendName);
-      console.log(blendName)
-    });
+
+    this.product$ = this._store.select(getSelectedProduct)
+
+  }
+
+  backToParent() {
+    this._store.dispatch(ProductActions.backToProductListpage())
   }
 
 
-  ngOnDestroy(): void {
-    this._sub.unsubscribe();
-  }
 }

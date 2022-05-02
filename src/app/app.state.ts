@@ -1,12 +1,6 @@
-import { CoffeeList } from './store/models/coffee.model';
+import { ProductState } from "./state/product.state";
 
-export interface AppState {
-  //readonly coffeeList: CoffeeList[];
-  coffeeList: CoffeeList[];
+export interface State {
+    product: ProductState
 }
 
-export interface CoffeeState {}
-
-export const initialState: CoffeeState = {
-  coffeeList: [],
-};

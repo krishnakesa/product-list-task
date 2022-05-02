@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col">
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">
+          <h1 class="text-center header">Product List Page</h1>
+        </span>
+      </div>
+    </nav>
+  </div>
+</div>
+<div class="row">
+  <div class="col" *ngIf="displayItems$ | async as displayItems">
+    <app-product-list
+      [products]="displayItems"
+      (rowItemClicked)="rowItemClicked($event)"
+    >
+    </app-product-list>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col" *ngIf="currentPage$ | async as currentPage">
+    <app-pagination
+      [currentPage]="currentPage"
+      [pageNumbers]="pageNumbers"
+      (onNextClicked)="getNext()"
+      (onPreviousClicked)="getPrevious()"
+      (onPageClicked)="getItems($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

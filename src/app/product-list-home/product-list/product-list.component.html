@@ -1,0 +1,27 @@
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Blend Name</th>
+      <th scope="col">Origin</th>
+      <!--<th scope="col">Variety</th>
+      <th scope="col">Intensifier</th>
+      <th scope="col">Notes</th>-->
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let product of products; let i = index"
+      (click)="rowClicked(product)"
+      [class.active]="(activeProductId$ | async) == product.id"
+    >
+      <!-- <th scope="row">{{ (currentPage - 1) * pageSize + (i + 1) }}</th> -->
+      <td>{{ product.index }}</td>
+      <td>{{ product.blend_name }}</td>
+      <td>{{ product.origin }}</td>
+      <!--<td>{{ product.variety }}</td>
+      <td>{{ product.intensifier }}</td>
+      <td>{{ product.notes }}</td>-->
+    </tr>
+  </tbody>
+</table>
