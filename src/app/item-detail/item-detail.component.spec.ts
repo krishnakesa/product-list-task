@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore } from '@ngrx/store/testing';
 import { ItemDetailComponent } from './item-detail.component';
+
+const initialState = { products: {} };
 
 describe('ItemDetailComponent', () => {
   let component: ItemDetailComponent;
@@ -8,9 +10,12 @@ describe('ItemDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ItemDetailComponent ]
+      declarations: [ItemDetailComponent],
+      providers: [
+        provideMockStore({ initialState })
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

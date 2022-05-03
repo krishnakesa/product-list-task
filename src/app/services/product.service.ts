@@ -13,7 +13,6 @@ export class ProductService {
   ) {}
 
   getProducts(size: number = 1): Observable<Product[]> {
-    //Getting Http Response from the given api in the form of Observable
     return this._http.get<Product[]>(`${this._productListHost}?size=${size}`);
   }
 }

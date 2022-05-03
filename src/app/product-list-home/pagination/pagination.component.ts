@@ -1,35 +1,28 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.css'],
+    selector: 'app-pagination',
+    templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.css'],
 })
 export class PaginationComponent {
-  @Input() pageSize: number = 10;
-  @Input() currentPage: number = 1;
-  @Input() pageNumbers: number[] = [1, 2, 3, 4, 5];
+    @Input() pageSize: number = 10;
+    @Input() currentPage: number = 1;
+    @Input() pageNumbers: number[] = [1, 2, 3, 4, 5];
 
-  @Output() onNextClicked = new EventEmitter();
-  @Output() onPreviousClicked = new EventEmitter();
-  @Output() onPageClicked = new EventEmitter();
+    @Output() onNextClicked = new EventEmitter();
+    @Output() onPreviousClicked = new EventEmitter();
+    @Output() onPageClicked = new EventEmitter();
 
-  //constructor() {}
+    getNext(): void {
+        this.onNextClicked.emit(this.currentPage);
+    }
 
-  //ngOnInit(): void {}
+    getPrevious(): void {
+        this.onPreviousClicked.emit(this.currentPage);
+    }
 
-  getNext(): void {
-    //Emits getNext event
-    this.onNextClicked.emit(this.currentPage);
-  }
-
-  getPrevious(): void {
-    //Emits getPrevious event
-    this.onPreviousClicked.emit(this.currentPage);
-  }
-
-  getItems(page: number): void {
-    //Emits PageClicked event
-    this.onPageClicked.emit(page);
-  }
+    getItems(page: number): void {
+        this.onPageClicked.emit(page);
+    }
 }

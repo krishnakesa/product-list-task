@@ -1,14 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
 import { ProductService } from './services/product.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+
+const initialState = { products: {} };
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
       imports: [HttpClientTestingModule],
-      providers: [ProductService],
+      providers: [ProductService, provideMockStore({ initialState })]
     }).compileComponents();
   });
 

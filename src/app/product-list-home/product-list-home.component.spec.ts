@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing'
 import { ProductListHomeComponent } from './product-list-home.component';
+import { provideMockStore } from '@ngrx/store/testing';
+
+const initialState = { products: {} };
 
 describe('ProductListHomeComponent', () => {
   let component: ProductListHomeComponent;
@@ -8,9 +11,13 @@ describe('ProductListHomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductListHomeComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ProductListHomeComponent],
+      providers: [
+        provideMockStore({ initialState })
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
