@@ -79,32 +79,3 @@ export const productReducer = createReducer<ProductState>(
     };
   })
 );
-
-const getProductsState = createFeatureSelector<ProductState>('products');
-
-export const getCurrentPageProducts = createSelector(
-  getProductsState,
-  (state: any) => {
-    return state.currentPageProducts;
-  }
-);
-
-export const getCurrentPageNumber = createSelector(
-  getProductsState,
-  (state: any) => {
-    return state.currentPageNumber;
-  }
-);
-
-export const getSelectedProduct = createSelector(
-  getProductsState,
-  (state: any) => {
-    return state.selectedProduct;
-  }
-);
-export const getSelectedProductId = createSelector(
-  getSelectedProduct,
-  (selectedProduct: any) => {
-    return selectedProduct && selectedProduct.id;
-  }
-);

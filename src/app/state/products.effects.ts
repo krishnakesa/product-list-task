@@ -16,6 +16,7 @@ export class ProductEffects {
     this.actions$.pipe(
       ofType(ProductActions.loadAllProducts),
       mergeMap(() =>
+        //Getting 50 products
         this.productService.getProducts(50).pipe(
           map((data) => {
             const products = data.map((product, index) => {
